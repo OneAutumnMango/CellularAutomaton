@@ -1,0 +1,12 @@
+BasedOnStyle: LLVM
+IndentWidth: 4
+ColumnLimit: 0
+NamespaceIndentation: All
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterEnum: true
+  AfterClass: true
+  SplitEmptyFunction: true
+  AfterControlStatement: false
+  BeforeElse: true
+  #BeforeWhile: true
