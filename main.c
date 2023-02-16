@@ -9,7 +9,8 @@ void next_line(unsigned int, int );
 int main() {
 
     printstr("starting...");
-    next_line(1 << 16, 110);
+    // next_line((1 << 4)|(1 << 16), 110);
+    next_line(0xaaaaaaaa, 110);
     printstr("ending...");
     return 0;
 }

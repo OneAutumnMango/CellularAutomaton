@@ -12,10 +12,12 @@ loop:
 	
 	srl t0, s2, s0  
 	and t0, t0, a1  	# checks bit at (pos) position
-	bnez t0, write		# if != 0 (if == 0) write the bit
-	
+
+	beqz t0, skip		# skip the write if t0 == 0	
+	jal write
+skip:
 	addi s0, s0, 1		# increment pos
-	
+
 	j loop
 	
 write:
@@ -23,17 +25,18 @@ write:
 	mul t1, t1, s0		# pos * 4 		(address incrementer)
 	add t2, s1, t1		# start addr + pos*4 	(address of word to write to)
 	
-	lw t3, (t2)	
-	srl t4, s2, a0
-	or t3, t3, t4
-	sw t3, (t2)
+	lw t3, (t2)			# load word to write to
+	srl t4, s2, a0		# shift 0b100...0 >> line(a0) 
+	or t3, t3, t4		# write bit from above to word
+	sw t3, (t2)			# save word back to addr
 	
-	# ---------------
-	li t6, 0xffff000c 	# print current pos to debug
-	sw s0, (t6)
-	# ---------------
+	# # ---------------
+	# li t6, 0xffff000c 	# print current pos to debug
+	# sw s0, (t6)
+	# # ---------------
 	
 	ret
 	
 end:
-	jr ra
+	li a7, 10
+	ecall
