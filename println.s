@@ -2,13 +2,15 @@
 	.globl println
 	
 println:	# a0: line | a1: word
+	mv s7, ra  		# save return address to leave the program
+
 	li s0, 0 		# current position (pos)
 	li s1, 0xffff8000    	# starting address of the graphics display
 	li s2, 0x80000000	# 0x80000000 = 0b1000...0
 	
 loop:
 	li t0, 32
-	bge s0, t0, end  	# branch if pos >= 32
+	bge s0, t0, exit  	# branch if pos >= 32
 	
 	srl t0, s2, s0  
 	and t0, t0, a1  	# checks bit at (pos) position
@@ -37,6 +39,5 @@ write:
 	
 	ret
 	
-end:
-	li a7, 10
-	ecall
+exit:
+	jr s7

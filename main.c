@@ -9,8 +9,8 @@ void next_line(unsigned int, int );
 int main() {
 
     printstr("starting...");
-    // next_line((1 << 4)|(1 << 16), 110);
-    next_line(0xaaaaaaaa, 110);
+    next_line((1 << 4)|(1 << 16), 110);
+    // next_line(0xaaaaaaaa, 110);
     printstr("ending...");
     return 0;
 }
@@ -28,7 +28,7 @@ void next_line(unsigned int cur, int rule) { // works for any rule in range [0, 
 
         printstr("\nline: "); // print line number to display
         printint(j);
-        
+
 
         next = 0;
         for (i = 0; i < WIDTH; i++) { // each pixel per line
