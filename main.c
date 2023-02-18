@@ -2,14 +2,37 @@
 
 #define BOUND 0
 #define WIDTH 32
+#define BUTTON 0xffff3100
+#define JOYSTICK 0xffff3200
 
 extern void println(unsigned int line, unsigned int word);
 void next_line(unsigned int, int );
+void start();
 
 int main() {
+    start();
     // next_line((1 << 16), 90);
     next_line(1, 110);
     return 0;
+}
+
+void start() {
+    unsigned int button_state = 0;
+    while (button_state)
+    {
+        unsigned int button = *(volatile unsigned int *)BUTTON;
+        unsigned int joystick = *(volatile unsigned int *)JOYSTICK;
+
+        //Check if the button is toggled
+        if(button) {
+            
+        }
+
+        //Check if the joystick is toggled
+        if(joystick) {
+            
+        }
+    }
 }
 
 void next_line(unsigned int cur, int rule) { // works for any rule in range [0, 256)
