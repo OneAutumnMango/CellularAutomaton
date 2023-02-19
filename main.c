@@ -40,7 +40,7 @@ unsigned int start() {
         }
 
         if (button) {
-
+            *((volatile int *)(STARTPIX + y*4)) ^= 0x80000000;
         }
         
 
