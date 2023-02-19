@@ -7,7 +7,7 @@ println:	# a0: line | a1: word
 	li t4, 0 		# current position (pos)
 	li t5, 0xffff8000    	# starting address of the graphics display
 	
-	
+
 loop:
 	li t0, 32
 	bge t4, t0, exit  	# branch if pos >= 32
