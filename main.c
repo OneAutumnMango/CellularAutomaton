@@ -10,9 +10,6 @@ unsigned int start();
 void setpixel(int x, int y);
 
 int main() {
-    start();
-
-    // next_line((1 << 16), 90);
     next_line(start(), 110);
     return 0;
 }
