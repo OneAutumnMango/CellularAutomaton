@@ -2,44 +2,67 @@
 
 #define BOUND 0
 #define WIDTH 32
-#define BUTTON 0xffff3100
-#define JOYSTICK 0xffff3200
+#define STARTPIX 0xffff8000
 
 extern void println(unsigned int line, unsigned int word);
 void next_line(unsigned int, int );
-void start();
+unsigned int start();
 void setpixel(int x, int y);
 
 int main() {
-    start();
-
-    // next_line((1 << 16), 90);
-    next_line(1, 110);
+    next_line(start(), 110);
     return 0;
 }
 
-void start() {
-    int i, j;
-    unsigned int button_state = 0;
-    while (button_state)
+unsigned int start() {
+    int y = 0;
+    unsigned int button = (volatile unsigned int)0xffff3100;
+    unsigned int joystick = (volatile unsigned int)0xffff3200;
+    cont = true;
+    while (cont)
     {
+        for (i = 0; i < 16; i++) {
+            if (i == 0) {
+                *((volatile int *)(STARTPIX + y*0x4)) ^= 0x80000000; //on
+                *((volatile int *)(STARTPIX + y*0x4)) ^= 0x80000000; //off
+            }
+        }
+
+        if (joystick) {
+            switch(joystick) {
+            case 0b1111:
+                if(y < WIDTH - 1) y+=1;
+                break;
+            case 0b0001:
+                if (y > 0) y-=1;
+                break;
+            }
+        }
+
+        if (button) {
+
+        }
+        
+
+        /*
         unsigned int button = *(volatile unsigned int *)BUTTON;
         unsigned int joystick = *(volatile unsigned int *)JOYSTICK;
         for(i = 0; i < WIDTH; i++) {
             for(j = 0; j < 1; j++) {
                 //Check if the button is toggled
                 if(button) {
-                    setpixel(i, j);
+                    setpixel(j, i);
                 }
 
                 //Check if the joystick is toggled
-                /*
+
                 if(joystick) {
             
                 }
-                */
+                
             }
         }
+        */
     }
 }
 
