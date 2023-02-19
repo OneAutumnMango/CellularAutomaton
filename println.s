@@ -12,8 +12,8 @@ loop:
 	li t0, 32
 	bge t4, t0, exit  	# branch if pos >= 32
 	
-#	srl t0, s10, t4  	# mirrors along x-axis
 	li t0, 0x00000001
+#	srl t0, t0, t4  	# mirrors along x-axis
 	sll t0, t0, t4 
 	and t0, t0, a1  	# checks bit at (pos) position
 
@@ -33,7 +33,7 @@ write:
 
 	li t0, 0x80000000	# 0x80000000 = 0b1000...0
 	srl t3, t0, a0		# shift 0b100...0 >> line(a0) -> bit mask
-#	sll t4, s11, a0		# shift 0b000..1 << line(a0)  -> mirrors along y-axis
+#	sll t3, t0, a0		# shift 0b000..1 << line(a0)  -> mirrors along y-axis
 
 	or t2, t2, t3		# write bit from above to word
 	sw t2, (t1)			# save word back to addr
