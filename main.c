@@ -6,7 +6,7 @@
 
 extern void println(unsigned int line, unsigned int word);
 void next_line(unsigned int, int );
-unsigned int start();
+int start();
 void setpixel(int x, int y);
 
 int main() {
@@ -14,14 +14,17 @@ int main() {
     return 0;
 }
 
-unsigned int start() {
+int start() {
     int y = 0;
-    unsigned int button = (volatile unsigned int)0xffff3100;
-    unsigned int joystick = (volatile unsigned int)0xffff3200;
-    cont = true;
-    while (cont)
+    int word = 0;
+    for (;;)
     {
-        for (i = 0; i < 16; i++) {
+        unsigned int button = (volatile unsigned int)0xffff3100;
+        unsigned int joystick = (volatile unsigned int)0xffff3200;
+        unsigned int stop = (volatile unsigned int)0xffff3300;
+
+
+        for (int i = 0; i < 16; i++) {
             if (i == 0) {
                 *((volatile int *)(STARTPIX + y*0x4)) ^= 0x80000000; //on
                 *((volatile int *)(STARTPIX + y*0x4)) ^= 0x80000000; //off
@@ -41,8 +44,12 @@ unsigned int start() {
 
         if (button) {
             *((volatile int *)(STARTPIX + y*4)) ^= 0x80000000;
+            word ^= 0b1 << y;
         }
+
+        if (stop) break;
     }
+    return word;
 }
 
 void next_line(unsigned int cur, int rule) { // works for any rule in range [0, 256)
