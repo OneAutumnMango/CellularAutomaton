@@ -18,10 +18,11 @@ unsigned int start() {
     int y = 0;
     unsigned int button = (volatile unsigned int)0xffff3100;
     unsigned int joystick = (volatile unsigned int)0xffff3200;
-    cont = true;
-    while (cont)
+    unsigned int stop = (volatile unsigned int)0xffff3300;
+    int word = 0;
+    for (;;)
     {
-        for (i = 0; i < 16; i++) {
+        for (int i = 0; i < 16; i++) {
             if (i == 0) {
                 *((volatile int *)(STARTPIX + y*0x4)) ^= 0x80000000; //on
                 *((volatile int *)(STARTPIX + y*0x4)) ^= 0x80000000; //off
@@ -42,6 +43,8 @@ unsigned int start() {
         if (button) {
 
         }
+
+        if (stop) break;
         
 
         /*
