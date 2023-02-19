@@ -19,6 +19,7 @@ int start() {
         unsigned int joystick = *(volatile unsigned int *)0xffff3200;
         unsigned int stop = *(volatile unsigned int *)0xffff3300;
 
+        // Signal Cursor Position
         for (int i = 0; i < 16; i++) {
             if (i == 0) {
                 *((volatile int *)(STARTPIX + y * 0x4)) ^= 0x80000000; // on
@@ -28,16 +29,16 @@ int start() {
 
         if (joystick) {
             switch (joystick) {
-            case 0b1111:
+            case 0b1111:  // Move cursor down
                 if (y < WIDTH - 1) y += 1;
                 break;
-            case 0b0001:
+            case 0b0001:  // Move cursor Up
                 if (y > 0) y -= 1;
                 break;
             }
         }
 
-        //Set pixel 
+        //  Set pixel 
         if (button) {
             *((volatile int *)(STARTPIX + y * 4)) ^= 0x80000000;
             word ^= 0b1 << y;
