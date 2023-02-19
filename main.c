@@ -42,33 +42,7 @@ unsigned int start() {
         if (button) {
             *((volatile int *)(STARTPIX + y*4)) ^= 0x80000000;
         }
-        
-
-        /*
-        unsigned int button = *(volatile unsigned int *)BUTTON;
-        unsigned int joystick = *(volatile unsigned int *)JOYSTICK;
-        for(i = 0; i < WIDTH; i++) {
-            for(j = 0; j < 1; j++) {
-                //Check if the button is toggled
-                if(button) {
-                    setpixel(j, i);
-                }
-
-                //Check if the joystick is toggled
-
-                if(joystick) {
-            
-                }
-                
-            }
-        }
-        */
     }
-}
-
-void setpixel(int x, int y) {
-    unsigned int *display = (unsigned int *)0xffff8000;
-    display[y] = display[y] | (0x1 << x);
 }
 
 void next_line(unsigned int cur, int rule) { // works for any rule in range [0, 256)
