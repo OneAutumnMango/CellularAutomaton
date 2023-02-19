@@ -26,21 +26,18 @@ unsigned int start() {
     {
         for (i = 0; i < 16; i++) {
             if (i == 0) {
-                
+                *((volatile int *)(STARTPIX + y*0x4)) ^= 0x80000000; //on
+                *((volatile int *)(STARTPIX + y*0x4)) ^= 0x80000000; //off
             }
         }
 
         if (joystick) {
             switch(joystick) {
-            case 0b111:
-                if(y < WIDTH - 1) {
-                    y+=1;
-                }
+            case 0b1111:
+                if(y < WIDTH - 1) y+=1;
                 break;
             case 0b0001:
-                if (y > 0) {
-                    y-=1;
-                }
+                if (y > 0) y-=1;
                 break;
             }
         }
