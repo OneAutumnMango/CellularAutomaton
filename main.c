@@ -49,7 +49,6 @@ int start() {
     return word;
 }
 
-
 void next_line(unsigned int cur, int rule) { // works for any rule in range [0, 256)
     int i;
     unsigned int state;
