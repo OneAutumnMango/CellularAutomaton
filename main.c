@@ -6,7 +6,7 @@
 
 extern void println(unsigned int line, unsigned int word);
 void next_line(unsigned int, int );
-unsigned int start();
+int start();
 void setpixel(int x, int y);
 
 int main() {
@@ -14,7 +14,7 @@ int main() {
     return 0;
 }
 
-unsigned int start() {
+int start() {
     int y = 0;
     unsigned int button = (volatile unsigned int)0xffff3100;
     unsigned int joystick = (volatile unsigned int)0xffff3200;
@@ -42,31 +42,12 @@ unsigned int start() {
 
         if (button) {
             *((volatile int *)(STARTPIX + y*4)) ^= 0x80000000;
+            word ^= 0b1 << y;
         }
 
         if (stop) break;
-        
-
-        /*
-        unsigned int button = *(volatile unsigned int *)BUTTON;
-        unsigned int joystick = *(volatile unsigned int *)JOYSTICK;
-        for(i = 0; i < WIDTH; i++) {
-            for(j = 0; j < 1; j++) {
-                //Check if the button is toggled
-                if(button) {
-                    setpixel(j, i);
-                }
-
-                //Check if the joystick is toggled
-
-                if(joystick) {
-            
-                }
-                
-            }
-        }
-        */
     }
+    return word;
 }
 
 void setpixel(int x, int y) {
