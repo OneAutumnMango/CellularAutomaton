@@ -37,6 +37,7 @@ int start() {
             }
         }
 
+        //Set pixel 
         if (button) {
             *((volatile int *)(STARTPIX + y * 4)) ^= 0x80000000;
             word ^= 0b1 << y;
