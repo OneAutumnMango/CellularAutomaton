@@ -1,5 +1,3 @@
-#include "lib.h"
-
 #define BOUND 0
 #define WIDTH 32
 #define STARTPIX 0xffff8000
@@ -7,7 +5,6 @@
 extern void println(unsigned int line, unsigned int word);
 void next_line(unsigned int, int );
 int start();
-void setpixel(int x, int y);
 
 int main() {
     next_line(start(), 110);
@@ -19,9 +16,9 @@ int start() {
     int word = 0;
     for (;;)
     {
-        unsigned int button = (volatile unsigned int)0xffff3100;
-        unsigned int joystick = (volatile unsigned int)0xffff3200;
-        unsigned int stop = (volatile unsigned int)0xffff3300;
+        unsigned int button = *(volatile unsigned int*)0xffff3100;
+        unsigned int joystick = *(volatile unsigned int*)0xffff3200;
+        unsigned int stop = *(volatile unsigned int*)0xffff3300;
 
 
         for (int i = 0; i < 16; i++) {
@@ -52,10 +49,6 @@ int start() {
     return word;
 }
 
-void setpixel(int x, int y) {
-    unsigned int *display = (unsigned int *)0xffff8000;
-    display[y] = display[y] | (0x1 << x);
-}
 
 void next_line(unsigned int cur, int rule) { // works for any rule in range [0, 256)
     int i;
